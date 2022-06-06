@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace B2Check
 {
@@ -134,10 +135,12 @@ namespace B2Check
                 _ = cmd.Parameters.Add(new OracleParameter("list", lists));
                 _ = cmd.Parameters.Add(new OracleParameter("fio", fio.ToUpper()));
 
+                dt.Columns.Add("checked", typeof(int));
                 dt.Columns.Add("siteid", typeof(int));
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("name_b2", typeof(string));
                 dt.Columns.Add("name_list", typeof(string));
+                dt.Columns.Add("list_id", typeof(int));
                 dt.Columns.Add("entity_id", typeof(int));
                 dt.Columns.Add("sname", typeof(string));
                 dt.Columns.Add("similar", typeof(int));
@@ -149,10 +152,12 @@ namespace B2Check
                 while (dr.Read())
                 {
                     DataRow row = dt.NewRow();
+                    row["checked"] = Convert.ToInt32(dr["checked"].ToString());
                     row["siteid"] = Convert.ToInt32(dr["siteid"].ToString());
                     row["id"] = Convert.ToInt32(dr["id"].ToString());
                     row["name_b2"] = dr["name_b2"].ToString();
                     row["name_list"] = dr["name_list"].ToString();
+                    row["list_id"] = Convert.ToInt32(dr["list_id"].ToString());
                     row["entity_id"] = Convert.ToInt32(dr["entity_id"].ToString());
                     row["sname"] = dr["sname"].ToString();
                     row["similar"] = Convert.ToInt32(dr["similar"].ToString());
@@ -170,6 +175,33 @@ namespace B2Check
                 bkConn.Close();
             }
             return dt;
+        }
+
+        public static async Task SetChecked(string log, string pass, int site, int id, int list_id, int check)
+        {
+            OracleConnection bkConn = GetConnection("BkConn", log.ToUpper(), pass);
+            OracleCommand cmd = new OracleCommand("sms.black.setChecked", bkConn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                cmd.Parameters.Clear();
+                _ = cmd.Parameters.Add(new OracleParameter("site_", site));
+                _ = cmd.Parameters.Add(new OracleParameter("id_", id));
+                _ = cmd.Parameters.Add(new OracleParameter("list_id_", list_id));
+                _ = cmd.Parameters.Add(new OracleParameter("checked_", check));
+
+                bkConn.Open();
+
+                _ = cmd.ExecuteNonQuery();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                bkConn.Close();
+            }
         }
     }
 }
