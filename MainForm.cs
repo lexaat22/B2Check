@@ -228,6 +228,10 @@ namespace B2Check
                 gridResult.Columns["stime"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 gridResult.Columns["stime"].HeaderText = "Дата и время";
 
+                //gridResult.Columns["checked_by"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                gridResult.Columns["checked_by"].HeaderText = "Кем выделено";
+                gridResult.Columns["similar"].Width = 150;
+
                 var sortedCol = string.IsNullOrEmpty(ConfigurationManager.AppSettings["sortedCol"]) ? "stime" : ConfigurationManager.AppSettings["sortedCol"];
                 gridResult.Sort(gridResult.Columns[sortedCol], string.IsNullOrEmpty(ConfigurationManager.AppSettings["sortOrder"]) ?
                     ListSortDirection.Ascending : ConfigurationManager.AppSettings["sortOrder"].Equals("Ascending") ?

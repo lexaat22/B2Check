@@ -145,6 +145,7 @@ namespace B2Check
                 dt.Columns.Add("sname", typeof(string));
                 dt.Columns.Add("similar", typeof(int));
                 dt.Columns.Add("stime", typeof(string));
+                dt.Columns.Add("checked_by", typeof(string));
 
                 bkConn.Open();
 
@@ -162,6 +163,7 @@ namespace B2Check
                     row["sname"] = dr["sname"].ToString();
                     row["similar"] = Convert.ToInt32(dr["similar"].ToString());
                     row["stime"] = dr["stime"].ToString();
+                    row["checked_by"] = dr["checked_by"].ToString();
                     dt.Rows.Add(row);
                 }
             }
