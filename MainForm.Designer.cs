@@ -29,8 +29,9 @@ namespace B2Check
         /// </summary>
         private void InitializeComponent()
         {
-            PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
+            this.cbPhys = new System.Windows.Forms.CheckBox();
             this.tbFio = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btShow = new System.Windows.Forms.Button();
@@ -49,11 +50,15 @@ namespace B2Check
             this.miExit = new System.Windows.Forms.ToolStripMenuItem();
             this.gridResult = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.cbPhys = new System.Windows.Forms.CheckBox();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.percentUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridResult)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxFilter
@@ -68,7 +73,7 @@ namespace B2Check
             this.groupBoxFilter.Controls.Add(this.label1);
             this.groupBoxFilter.Controls.Add(this.percentUpDown);
             this.groupBoxFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBoxFilter.Location = new System.Drawing.Point(0, 36);
+            this.groupBoxFilter.Location = new System.Drawing.Point(0, 33);
             this.groupBoxFilter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxFilter.Name = "groupBoxFilter";
             this.groupBoxFilter.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -76,6 +81,19 @@ namespace B2Check
             this.groupBoxFilter.TabIndex = 0;
             this.groupBoxFilter.TabStop = false;
             this.groupBoxFilter.Text = "Фильтры:";
+            // 
+            // cbPhys
+            // 
+            this.cbPhys.AutoSize = true;
+            this.cbPhys.Checked = true;
+            this.cbPhys.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbPhys.Enabled = false;
+            this.cbPhys.Location = new System.Drawing.Point(469, 58);
+            this.cbPhys.Name = "cbPhys";
+            this.cbPhys.Size = new System.Drawing.Size(93, 24);
+            this.cbPhys.TabIndex = 8;
+            this.cbPhys.Text = "Физики";
+            this.cbPhys.UseVisualStyleBackColor = true;
             // 
             // tbFio
             // 
@@ -127,8 +145,8 @@ namespace B2Check
             // 
             this.sourceBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sourceBox.CheckBoxProperties = checkBoxProperties1;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.sourceBox.CheckBoxProperties = checkBoxProperties2;
             this.sourceBox.DisplayMemberSingleItem = "";
             this.sourceBox.FormattingEnabled = true;
             this.sourceBox.Location = new System.Drawing.Point(609, 57);
@@ -187,7 +205,7 @@ namespace B2Check
             this.менюToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1512, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1512, 33);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -247,43 +265,67 @@ namespace B2Check
             // 
             this.gridResult.AllowUserToAddRows = false;
             this.gridResult.AllowUserToDeleteRows = false;
+            this.gridResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridResult.Location = new System.Drawing.Point(0, 134);
             this.gridResult.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gridResult.Name = "gridResult";
             this.gridResult.ReadOnly = true;
             this.gridResult.RowHeadersWidth = 62;
-            this.gridResult.Size = new System.Drawing.Size(1512, 988);
+            this.gridResult.Size = new System.Drawing.Size(1512, 954);
             this.gridResult.TabIndex = 2;
             this.gridResult.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridResult_CellMouseClick);
             this.gridResult.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridResult_CellMouseUp);
-            this.gridResult.SelectionChanged += new System.EventHandler(this.gridResult_SelectionChanged);
             this.gridResult.Sorted += new System.EventHandler(this.gridResult_Sorted);
-            this.gridResult.Click += new System.EventHandler(this.gridResult_Click);
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1100);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2,
+            this.toolStripStatusLabel3,
+            this.toolStripStatusLabel4});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1090);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1512, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1512, 32);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // cbPhys
+            // toolStripStatusLabel1
             // 
-            this.cbPhys.AutoSize = true;
-            this.cbPhys.Checked = true;
-            this.cbPhys.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPhys.Enabled = false;
-            this.cbPhys.Location = new System.Drawing.Point(469, 58);
-            this.cbPhys.Name = "cbPhys";
-            this.cbPhys.Size = new System.Drawing.Size(93, 24);
-            this.cbPhys.TabIndex = 8;
-            this.cbPhys.Text = "Физики";
-            this.cbPhys.UseVisualStyleBackColor = true;
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.LightBlue;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(179, 25);
+            this.toolStripStatusLabel1.Text = "Ложное совпадение";
+            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.BackColor = System.Drawing.Color.Orange;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(176, 25);
+            this.toolStripStatusLabel2.Text = "Полное совпадение";
+            this.toolStripStatusLabel2.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.BackColor = System.Drawing.Color.LightGreen;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(128, 25);
+            this.toolStripStatusLabel3.Text = "До выяснения";
+            this.toolStripStatusLabel3.Click += new System.EventHandler(this.toolStripStatusLabel3_Click);
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.BackColor = System.Drawing.Color.White;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(120, 25);
+            this.toolStripStatusLabel4.Text = "Не проверен";
+            this.toolStripStatusLabel4.Click += new System.EventHandler(this.toolStripStatusLabel4_Click);
             // 
             // MainForm
             // 
@@ -306,6 +348,8 @@ namespace B2Check
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridResult)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,6 +377,10 @@ namespace B2Check
         private System.Windows.Forms.ToolStripMenuItem miTXT;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.CheckBox cbPhys;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
     }
 }
 

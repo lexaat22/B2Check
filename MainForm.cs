@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Data;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace B2Check
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         static string log, pass;
         List<BLSource> list = null;
+        bool filterOn = false;
 
         public MainForm(string l, string p)
         {
@@ -154,33 +156,27 @@ namespace B2Check
             }
         }
 
-        private void gridResult_SelectionChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gridResult_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void gridResult_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            var ch = 0;
             if ((ModifierKeys & Keys.Alt) != 0)
+                ch = 1;
+            if ((ModifierKeys & Keys.Control) != 0)
+                ch = 2;
+            if ((ModifierKeys & Keys.Shift) != 0)
+                ch = 3;
+
+            if (ch > 0 && e.RowIndex != -1)
             {
-                if (e.RowIndex != -1)
-                {
-                    if (gridResult.CurrentCell == null) return;
-                    var siteid = Convert.ToInt32(gridResult.CurrentRow.Cells["siteid"].Value);
-                    var id = Convert.ToInt32(gridResult.CurrentRow.Cells["id"].Value);
-                    var list_id = Convert.ToInt32(gridResult.CurrentRow.Cells["list_id"].Value);
-                    var check = Convert.ToInt32(gridResult.CurrentRow.Cells["checked"].Value);
-                    check = check > 0 ? 0 : 1;
-                    SetChecked(log, pass, siteid, id, list_id, check);
-                    //BindGrid(Convert.ToInt32(percentUpDown.Value), getListIds(), tbFio.Text);
-                    gridResult.CurrentRow.Cells["checked"].Value = check;
-                    DrawRow(gridResult.CurrentRow);
-                }
+                if (gridResult.CurrentCell == null) return;
+                var siteid = Convert.ToInt32(gridResult.CurrentRow.Cells["siteid"].Value);
+                var id = Convert.ToInt32(gridResult.CurrentRow.Cells["id"].Value);
+                var list_id = Convert.ToInt32(gridResult.CurrentRow.Cells["list_id"].Value);
+                var check = Convert.ToInt32(gridResult.CurrentRow.Cells["checked"].Value);
+                check = check > 0 ? 0 : ch;
+                SetChecked(log, pass, siteid, id, list_id, check);
+                gridResult.CurrentRow.Cells["checked"].Value = check;
+                DrawRow(gridResult.CurrentRow);
             }
         }
 
@@ -194,9 +190,8 @@ namespace B2Check
                 if (gridResult.Columns["checked"] is DataGridViewCheckBoxColumn)
                 {
                     (gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).HeaderText = "Галочка";
-                    (gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).FalseValue = false;
-                    (gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).TrueValue = true;
-                    (gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).TrueValue = true;
+                    //(gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).FalseValue = false;
+                    //(gridResult.Columns["checked"] as DataGridViewCheckBoxColumn).TrueValue = true;
                 }
                 gridResult.Columns["checked"].Visible = false;
 
@@ -272,8 +267,49 @@ namespace B2Check
             {
                 row.DefaultCellStyle.BackColor = Color.LightBlue;
             }
+            else if (row.Cells["checked"].Value != null && Convert.ToInt32(row.Cells["checked"].Value) == 2)
+            {
+                row.DefaultCellStyle.BackColor = Color.Orange;
+            }
+            else if (row.Cells["checked"].Value != null && Convert.ToInt32(row.Cells["checked"].Value) == 3)
+            {
+                row.DefaultCellStyle.BackColor = Color.LightGreen;
+            }
             else
                 row.DefaultCellStyle.BackColor = Color.White;
+        }
+
+        private void FilterRows(string columnName, string filterValue)
+        {
+            string rowFilter;
+            if (filterOn)
+                rowFilter = string.Format("[{0}] = {1}", columnName, filterValue);
+            else rowFilter = "";
+            (gridResult.DataSource as DataTable).DefaultView.RowFilter = rowFilter;
+            filterOn = !filterOn;
+        }
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+            FilterRows("checked", "1");
+            DrawSelectedRows();
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+            FilterRows("checked", "2");
+            DrawSelectedRows();
+        }
+
+        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
+        {
+            FilterRows("checked", "3");
+            DrawSelectedRows();
+        }
+
+        private void toolStripStatusLabel4_Click(object sender, EventArgs e)
+        {
+            FilterRows("checked", "0");
+            DrawSelectedRows();
         }
 
         private async void SetChecked(string log, string pass, int site, int id, int list_id, int check)
