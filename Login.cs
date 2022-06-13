@@ -27,18 +27,18 @@ namespace B2Check
             DialogResult = DialogResult.None;
             try
             {
-                OracleConnection bkConn = Utils.GetConnection("BkConn", tbLogin.Text.ToUpper(), tbPass.Text);
-                OracleCommand cmd = new OracleCommand("", bkConn);
-                string subSql = "select count(*) from bank974.ISEEKJU where upper(login) = upper(':Login')";
+                //OracleConnection bkConn = Utils.GetConnection("BkConn", tbLogin.Text.ToUpper(), tbPass.Text);
+                //OracleCommand cmd = new OracleCommand("", bkConn);
+                //string subSql = "select count(*) from bank974.ISEEKJU where upper(login) = upper(':Login')";
                 try
                 {
                     btEnter.Enabled = false;
-                    bkConn.Open();
+                    //bkConn.Open();
 
-                    subSql = subSql.Replace(":Login", tbLogin.Text);
-                    cmd.CommandText = subSql;
-                    int n = Convert.ToInt32(cmd.ExecuteScalar());
-                    if (n > 0)
+                    //subSql = subSql.Replace(":Login", tbLogin.Text);
+                    //cmd.CommandText = subSql;
+                    //int n = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (Utils.HasAccess(tbLogin.Text.ToUpper(), tbPass.Text))
                     {
                         config.AppSettings.Settings.Remove("Login");
                         config.AppSettings.Settings.Add("Login", tbLogin.Text);
@@ -59,7 +59,7 @@ namespace B2Check
                 }
                 finally
                 {
-                    bkConn.Close();
+                   // bkConn.Close();
                     btEnter.Enabled = true;
                     tbPass.Text = "";
                 }

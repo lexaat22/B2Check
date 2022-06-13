@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -310,6 +311,12 @@ namespace B2Check
         {
             FilterRows("checked", "0");
             DrawSelectedRows();
+        }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MessageBox.Show(string.Format($"Версия программы: {version}"));
         }
 
         private async void SetChecked(string log, string pass, int site, int id, int list_id, int check)

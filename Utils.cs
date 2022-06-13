@@ -167,7 +167,7 @@ namespace B2Check
                     dt.Rows.Add(row);
                 }
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -204,6 +204,32 @@ namespace B2Check
             {
                 bkConn.Close();
             }
+        }
+
+        public static bool HasAccess(string log, string pass)
+        {
+            bool result = false;
+            OracleConnection bkConn = GetConnection("BkConn", log.ToUpper(), pass);
+            OracleCommand cmd = new OracleCommand(string.Format($"select count(*) from bank9049.users u inner join bank9049.user_roles ur on ur.user_id = u.id inner join bank9049.roles r on r.id = ur.role_id inner join bank9049.role_apps ra on ra.role_id = r.id " +
+                $"inner join bank9049.apps a on a.id = ra.app_id where u.user_name = upper('{log}') and a.id = 515"), bkConn);
+            try
+            {
+                bkConn.Open();
+                object o = cmd.ExecuteScalar();
+                if (o != null)
+                {
+                    result = Convert.ToInt32(o) > 0;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                bkConn.Close();
+            }
+            return result;
         }
     }
 }
